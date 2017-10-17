@@ -42,4 +42,24 @@ class TaskController extends Controller
             'tasks' => $this->tasks->forUser($request->user()),
         ]);
     }
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:255',
+        ]);
+
+        $request->user()->tasks()->create([
+            'name' => $request->name,
+        ]);
+
+        return redirect('/tasks');
+    }
+    public function destroy(Request $request, Task $task)
+    {
+        $this->authorize('destroy', $task);
+
+        $task->delete();
+
+        return redirect('/tasks');
+    }
 }
