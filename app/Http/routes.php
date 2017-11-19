@@ -20,3 +20,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::delete('/task/{task}', 'TaskController@destroy');
     Route::auth();
 });
+Route::get('/home', function () {
+    return view('home');
+});
